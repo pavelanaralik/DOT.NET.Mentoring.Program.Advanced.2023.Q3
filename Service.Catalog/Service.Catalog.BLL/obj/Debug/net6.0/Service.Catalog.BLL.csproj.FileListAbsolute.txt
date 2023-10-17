@@ -1,0 +1,15 @@
+C:\D\Study\.NET Mentoring Program Advanced 2023 Q3\DOT.NET.Mentoring.Program.Advanced.2023.Q3\Service.Catalog\Service.Catalog.BLL\obj\Debug\net6.0\Service.Catalog.BLL.csproj.AssemblyReference.cache
+C:\D\Study\.NET Mentoring Program Advanced 2023 Q3\DOT.NET.Mentoring.Program.Advanced.2023.Q3\Service.Catalog\Service.Catalog.BLL\obj\Debug\net6.0\Service.Catalog.BLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\D\Study\.NET Mentoring Program Advanced 2023 Q3\DOT.NET.Mentoring.Program.Advanced.2023.Q3\Service.Catalog\Service.Catalog.BLL\obj\Debug\net6.0\Service.Catalog.BLL.AssemblyInfoInputs.cache
+C:\D\Study\.NET Mentoring Program Advanced 2023 Q3\DOT.NET.Mentoring.Program.Advanced.2023.Q3\Service.Catalog\Service.Catalog.BLL\obj\Debug\net6.0\Service.Catalog.BLL.AssemblyInfo.cs
+C:\D\Study\.NET Mentoring Program Advanced 2023 Q3\DOT.NET.Mentoring.Program.Advanced.2023.Q3\Service.Catalog\Service.Catalog.BLL\obj\Debug\net6.0\Service.Catalog.BLL.csproj.CoreCompileInputs.cache
+C:\D\Study\.NET Mentoring Program Advanced 2023 Q3\DOT.NET.Mentoring.Program.Advanced.2023.Q3\Service.Catalog\Service.Catalog.BLL\bin\Debug\net6.0\Service.Catalog.BLL.deps.json
+C:\D\Study\.NET Mentoring Program Advanced 2023 Q3\DOT.NET.Mentoring.Program.Advanced.2023.Q3\Service.Catalog\Service.Catalog.BLL\bin\Debug\net6.0\Service.Catalog.BLL.dll
+C:\D\Study\.NET Mentoring Program Advanced 2023 Q3\DOT.NET.Mentoring.Program.Advanced.2023.Q3\Service.Catalog\Service.Catalog.BLL\bin\Debug\net6.0\Service.Catalog.BLL.pdb
+C:\D\Study\.NET Mentoring Program Advanced 2023 Q3\DOT.NET.Mentoring.Program.Advanced.2023.Q3\Service.Catalog\Service.Catalog.BLL\bin\Debug\net6.0\Service.Catalog.DAL.dll
+C:\D\Study\.NET Mentoring Program Advanced 2023 Q3\DOT.NET.Mentoring.Program.Advanced.2023.Q3\Service.Catalog\Service.Catalog.BLL\bin\Debug\net6.0\Service.Catalog.DAL.pdb
+C:\D\Study\.NET Mentoring Program Advanced 2023 Q3\DOT.NET.Mentoring.Program.Advanced.2023.Q3\Service.Catalog\Service.Catalog.BLL\obj\Debug\net6.0\Service.Catalog.BLL.csproj.CopyComplete
+C:\D\Study\.NET Mentoring Program Advanced 2023 Q3\DOT.NET.Mentoring.Program.Advanced.2023.Q3\Service.Catalog\Service.Catalog.BLL\obj\Debug\net6.0\Service.Catalog.BLL.dll
+C:\D\Study\.NET Mentoring Program Advanced 2023 Q3\DOT.NET.Mentoring.Program.Advanced.2023.Q3\Service.Catalog\Service.Catalog.BLL\obj\Debug\net6.0\refint\Service.Catalog.BLL.dll
+C:\D\Study\.NET Mentoring Program Advanced 2023 Q3\DOT.NET.Mentoring.Program.Advanced.2023.Q3\Service.Catalog\Service.Catalog.BLL\obj\Debug\net6.0\Service.Catalog.BLL.pdb
+C:\D\Study\.NET Mentoring Program Advanced 2023 Q3\DOT.NET.Mentoring.Program.Advanced.2023.Q3\Service.Catalog\Service.Catalog.BLL\obj\Debug\net6.0\ref\Service.Catalog.BLL.dll
