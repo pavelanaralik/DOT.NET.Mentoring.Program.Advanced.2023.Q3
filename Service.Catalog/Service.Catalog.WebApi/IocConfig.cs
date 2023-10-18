@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Service.Catalog.DAL.Repositories;
+using Service.Catalog.Application.Services;
+using Service.Catalog.Infrastructure.Repositories;
 
 namespace Service.Catalog.WebApi;
 
@@ -12,6 +13,7 @@ public static class IocConfig
         var services = builder.Services;
 
         services
+             .AddScoped<ICartAppService, CartAppService>()
              .AddScoped<ICartRepository, CartRepository>();
     }
 }
