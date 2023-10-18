@@ -7,14 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-	<ItemGroup>
-		<InternalsVisibleTo Include="$(AssemblyName).BLL" />
-		<InternalsVisibleTo Include="$(AssemblyName).WebApi" />
-		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
-	</ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="MongoDB.Driver" Version="2.22.0" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
 
 </Project>
