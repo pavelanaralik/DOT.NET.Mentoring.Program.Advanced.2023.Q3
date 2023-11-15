@@ -17,10 +17,10 @@ public class CartAppServiceTests
     {
         _cartRepositoryMock = new Mock<ICartRepository>();
 
-        _cartRepositoryMock.Setup(repo => repo.GetById(It.IsAny<int>()))
-            .Returns(new Cart() {Id = 1});
+        _cartRepositoryMock.Setup(repo => repo.GetByIdAsync(It.IsAny<int>()))
+            .ReturnsAsync(new Cart() {Id = 1});
 
-        _cartRepositoryMock.Setup(repo => repo.Save(It.IsAny<Cart>()))
+        _cartRepositoryMock.Setup(repo => repo.SaveAsync(It.IsAny<Cart>()))
             .Verifiable();
 
         _cartAppService = new CartAppService(_cartRepositoryMock.Object);
@@ -42,10 +42,10 @@ public class CartAppServiceTests
         };
 
         // Act
-        _cartAppService.AddItemToCart(cartId, itemDto);
+        _cartAppService.AddItemToCartAsync(cartId, itemDto);
 
         // Assert
-        _cartRepositoryMock.Verify(repo => repo.Save(It.IsAny<Cart>()), Times.Once);
+        _cartRepositoryMock.Verify(repo => repo.SaveAsync(It.IsAny<Cart>()), Times.Once);
     }
 
     [TestMethod]
@@ -63,7 +63,7 @@ public class CartAppServiceTests
         };
 
         // Act
-        _cartAppService.AddItemToCart(cartId, itemDto);
+        _cartAppService.AddItemToCartAsync(cartId, itemDto);
     }
 
 

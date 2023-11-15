@@ -2,18 +2,17 @@
 using Service.Carting.Application.Services;
 using Service.Carting.Infrastructure.Repositories;
 
-namespace Service.Carting.WebApi;
+namespace Service.Carting.WebApi.Setup;
 
 [ExcludeFromCodeCoverage]
 public static class IocConfig
 {
-    public static void AddWebApiIocConfig(this WebApplicationBuilder builder)
+    public static IServiceCollection AddWebApiIocConfig(this IServiceCollection services)
     {
-
-        var services = builder.Services;
-
         services
              .AddScoped<ICartAppService, CartAppService>()
              .AddScoped<ICartRepository, CartRepository>();
+
+        return services;
     }
 }

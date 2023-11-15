@@ -14,9 +14,33 @@ public class CartAppService : ICartAppService
         _cartRepository = cartRepository;
     }
 
-    public List<CartItemDto> GetAllItemsFromCart(int cartId)
+    public async Task<CartDto> GetCartAsync(int cartId)
     {
-        var cart = _cartRepository.GetById(cartId);
+        var cart = await _cartRepository.GetByIdAsync(cartId);
+
+        if (cart is null) return null;
+
+        return new CartDto
+        {
+            Id = cart.Id,
+            Items = cart.Items.Select(item => new CartItemDto
+            {
+                Id = item.Id,
+                Name = item.Name,
+                ImageUrl = item.Image?.Url,
+                ImageAltText = item.Image?.AltText,
+                Price = item.Price,
+                Quantity = item.Quantity
+            }).ToList()
+        };
+    }
+
+    public async Task<List<CartItemDto>> GetAllItemsFromCartAsync(int cartId)
+    {
+        var cart = await _cartRepository.GetByIdAsync(cartId);
+
+        if (cart is null) return null;
+
         return cart.Items.Select(item => new CartItemDto
         {
             Id = item.Id,
@@ -28,33 +52,33 @@ public class CartAppService : ICartAppService
         }).ToList();
     }
 
-    public void AddItemToCart(int cartId, CartItemDto itemDto)
+    public async Task AddItemToCartAsync(int cartId, CartItemDto itemDto)
     {
-        var cart = _cartRepository.GetById(cartId);
+        var cart = await _cartRepository.GetByIdAsync(cartId);
 
         var item = new CartItem(itemDto.Id, itemDto.Name, itemDto.Price, itemDto.Quantity,
             new ImageInfo(itemDto.ImageUrl, itemDto.ImageAltText));
 
         cart.AddItem(item);
 
-        _cartRepository.Save(cart);
+        await _cartRepository.SaveAsync(cart);
     }
 
-    public void RemoveItemFromCart(int cartId, int itemId)
+    public async Task RemoveItemFromCartAsync(int cartId, int itemId)
     {
-        var cart = _cartRepository.GetById(cartId);
+        var cart = await _cartRepository.GetByIdAsync(cartId);
         cart.RemoveItem(itemId);
-        _cartRepository.Save(cart);
+        await _cartRepository.SaveAsync(cart);
     }
 
-    public void UpdateItemQuantity(int cartId, int itemId, int newQuantity)
+    public async Task UpdateItemQuantityAsync(int cartId, int itemId, int newQuantity)
     {
         if (newQuantity <= 0)
         {
             throw new ArgumentException("Quantity must be a positive integer.");
         }
 
-        var cart = _cartRepository.GetById(cartId);
+        var cart = await _cartRepository.GetByIdAsync(cartId);
         var item = cart.Items.FirstOrDefault(i => i.Id == itemId);
 
         if (item == null)
@@ -63,13 +87,13 @@ public class CartAppService : ICartAppService
         }
 
         item.UpdateQuantity(newQuantity);
-        _cartRepository.Save(cart);
+        await _cartRepository.SaveAsync(cart);
     }
 
-    public void ClearCart(int cartId)
+    public async Task ClearCartAsync(int cartId)
     {
-        var cart = _cartRepository.GetById(cartId);
+        var cart = await _cartRepository.GetByIdAsync(cartId);
         cart.ClearItems(); 
-        _cartRepository.Save(cart);
+        await _cartRepository.SaveAsync(cart);
     }
 }

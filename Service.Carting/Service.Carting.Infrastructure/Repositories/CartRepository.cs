@@ -14,43 +14,43 @@ public class CartRepository : ICartRepository
         _cartCollection = database.GetCollection<Cart>(collectionName);
     }
 
-    public Cart GetById(int id)
+    public Task<Cart> GetByIdAsync(int id)
     {
-        return _cartCollection.Find(cart => cart.Id == id).FirstOrDefault();
+        return _cartCollection.Find(cart => cart.Id == id).FirstOrDefaultAsync();
     }
 
-    public IEnumerable<Cart> GetAll()
+    public Task<List<Cart>> GetAllAsync()
     {
-        return _cartCollection.Find(cart => true).ToList();
+        return _cartCollection.Find(cart => true).ToListAsync();
     }
 
-    public void Add(Cart cart)
+    public async Task AddAsync(Cart cart)
     {
-        _cartCollection.InsertOne(cart);
+       await _cartCollection.InsertOneAsync(cart);
     }
 
-    public void Update(Cart cart)
+    public async Task UpdateAsync(Cart cart)
     {
         var filter = Builders<Cart>.Filter.Eq(e => e.Id, cart.Id);
-        _cartCollection.ReplaceOne(filter, cart);
+        await _cartCollection.ReplaceOneAsync(filter, cart);
     }
 
-    public void Delete(Cart cart)
+    public async Task DeleteAsync(Cart cart)
     {
         var filter = Builders<Cart>.Filter.Eq(e => e.Id, cart.Id);
-        _cartCollection.DeleteOne(filter);
+        await _cartCollection.DeleteOneAsync(filter);
     }
 
-    public void Save(Cart cart)
+    public async Task SaveAsync(Cart cart)
     {
-        var existingCart = GetById(cart.Id);
+        var existingCart = await GetByIdAsync(cart.Id);
         if (existingCart == null)
         {
-            Add(cart);
+           await AddAsync(cart);
         }
         else
         {
-            Update(cart);
+           await UpdateAsync(cart);
         }
     }
 }

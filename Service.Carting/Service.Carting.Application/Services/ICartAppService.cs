@@ -4,13 +4,15 @@ namespace Service.Carting.Application.Services;
 
 public interface ICartAppService
 {
-    List<CartItemDto> GetAllItemsFromCart(int cartId);
+    Task<CartDto> GetCartAsync(int cartId);
 
-    void AddItemToCart(int cartId, CartItemDto itemDto);
+    Task<List<CartItemDto>> GetAllItemsFromCartAsync(int cartId);
 
-    void RemoveItemFromCart(int cartId, int itemId);
+    Task AddItemToCartAsync(int cartId, CartItemDto itemDto);
 
-    void UpdateItemQuantity(int cartId, int itemId, int newQuantity);  
+    Task RemoveItemFromCartAsync(int cartId, int itemId);
 
-    void ClearCart(int cartId);
+    Task UpdateItemQuantityAsync(int cartId, int itemId, int newQuantity);
+
+    Task ClearCartAsync(int cartId);
 }

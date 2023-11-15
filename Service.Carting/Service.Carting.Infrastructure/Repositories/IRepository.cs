@@ -1,16 +1,18 @@
-﻿namespace Service.Carting.Infrastructure.Repositories;
+﻿using Service.Carting.Domain.Aggregates;
+
+namespace Service.Carting.Infrastructure.Repositories;
 
 public interface IRepository<TEntity> where TEntity : class
 {
-    TEntity GetById(int id);
+    Task<TEntity> GetByIdAsync(int id);
 
-    void Add(TEntity entity);
+    Task AddAsync(TEntity entity);
 
-    void Update(TEntity entity);
+    Task UpdateAsync(TEntity entity);
 
-    void Delete(TEntity entity);
+    Task DeleteAsync(TEntity entity);
 
-    IEnumerable<TEntity> GetAll();
+    Task<List<TEntity>> GetAllAsync();
 
-    void Save(TEntity entity);
+    Task SaveAsync(TEntity entity);
 }
