@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using Service.Catalog.Application.DTOs;
+using Service.Catalog.Application.MessagesBrokers;
 using Service.Catalog.Application.Validators;
 using Service.Catalog.Domain.Entities;
 using Service.Catalog.Infrastructure.Repositories;
@@ -10,13 +11,15 @@ namespace Service.Catalog.Application.Services;
 public class ProductItemService : IProductItemService
 {
     private readonly IProductItemRepository _itemRepository;
+    private readonly IMessageService _messageService;
     private readonly IMapper _mapper;
     private readonly ProductItemValidator _itemValidator = new ProductItemValidator();
 
-    public ProductItemService(IProductItemRepository itemRepository, IMapper mapper)
+    public ProductItemService(IProductItemRepository itemRepository, IMapper mapper, IMessageService messageService)
     {
         _itemRepository = itemRepository;
         _mapper = mapper;
+        _messageService = messageService;
     }
 
     public async Task<ProductItemDto> GetItemByIdAsync(int id, CancellationToken cancellationToken = default)
@@ -61,6 +64,7 @@ public class ProductItemService : IProductItemService
 
         var item = _mapper.Map<ProductItem>(itemDto);
         await _itemRepository.UpdateAsync(item, cancellationToken);
+        await _messageService.PublishAsync(itemDto);
     }
 
     public async Task DeleteItemAsync(int id, CancellationToken cancellationToken = default)

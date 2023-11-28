@@ -15,4 +15,6 @@ public interface ICartAppService
     Task UpdateItemQuantityAsync(int cartId, int itemId, int newQuantity);
 
     Task ClearCartAsync(int cartId);
+
+    Task UpdateItemToCartsAsync(CartItemDto itemDto);
 }

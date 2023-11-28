@@ -128,7 +128,7 @@ public class ItemController : ControllerBase
         if (productId != itemDto.Id)
             return BadRequest();
 
-        await _productItemService.UpdateItemAsync(itemDto);
+        await _productItemService.UpdateItemAsync(itemDto, cancellationToken);
         return NoContent();
     }
 

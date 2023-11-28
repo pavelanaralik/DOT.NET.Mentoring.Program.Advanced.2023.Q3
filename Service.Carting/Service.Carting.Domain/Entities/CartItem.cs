@@ -1,4 +1,5 @@
 ﻿using Service.Carting.Domain.ValueObjects;
+using System.Xml.Linq;
 
 namespace Service.Carting.Domain.Entities;
 
@@ -26,5 +27,20 @@ public class CartItem : BaseEntity
         }
 
         Quantity = newQuantity;
+    }
+
+    public void UpdatePrice(decimal price)
+    {
+        if (price < 0)
+        {
+            throw new ArgumentException("Price must be a positive integer.");
+        }
+
+        Price = price;
+    }
+
+    public void UpdateName(string name)
+    {
+        Name = name ?? throw new ArgumentException();
     }
 }

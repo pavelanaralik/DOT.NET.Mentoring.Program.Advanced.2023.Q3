@@ -11,7 +11,10 @@ internal static class ControllerSetup
             {
                 options.ReturnHttpNotAcceptable = true;
                 options.InputFormatters.Add(new XmlSerializerInputFormatter(options));
-                options.CacheProfiles.Add("Default10", new CacheProfile() { Duration = 10 }); // 10 second cache
+                options.CacheProfiles.Add("Default5min", new CacheProfile
+                {
+                    Duration = 10,
+                }); // 5 min cache
             })
             .AddXmlDataContractSerializerFormatters()
             ;

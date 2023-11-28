@@ -36,7 +36,7 @@ public class CartAppServiceTests
             Id = 1,
             Name = "TestItem",
             Price = 10.0M,
-            Quantity = 2,
+            Amount = 2,
             ImageAltText = "Test",
             ImageUrl = "test"
         };
@@ -59,7 +59,7 @@ public class CartAppServiceTests
             Id = 1,
             Name = "TestItem",
             Price = -10.0M,  // Invalid price
-            Quantity = 2
+            Amount = 2
         };
 
         // Act

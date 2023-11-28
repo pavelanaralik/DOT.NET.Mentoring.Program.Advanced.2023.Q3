@@ -30,7 +30,7 @@ public class CartAppService : ICartAppService
                 ImageUrl = item.Image?.Url,
                 ImageAltText = item.Image?.AltText,
                 Price = item.Price,
-                Quantity = item.Quantity
+                Amount = item.Quantity
             }).ToList()
         };
     }
@@ -48,7 +48,7 @@ public class CartAppService : ICartAppService
             ImageUrl = item.Image?.Url,
             ImageAltText = item.Image?.AltText,
             Price = item.Price,
-            Quantity = item.Quantity
+            Amount = item.Quantity
         }).ToList();
     }
 
@@ -56,12 +56,32 @@ public class CartAppService : ICartAppService
     {
         var cart = await _cartRepository.GetByIdAsync(cartId);
 
-        var item = new CartItem(itemDto.Id, itemDto.Name, itemDto.Price, itemDto.Quantity,
+        var item = new CartItem(itemDto.Id, itemDto.Name, itemDto.Price, itemDto.Amount,
             new ImageInfo(itemDto.ImageUrl, itemDto.ImageAltText));
-
+        
         cart.AddItem(item);
 
         await _cartRepository.SaveAsync(cart);
+    }
+
+    public async Task UpdateItemToCartsAsync(CartItemDto itemDto)
+    {
+        var carts = await _cartRepository.GetAllAsync();
+
+        foreach (var cart in carts)
+        {
+            foreach (var item in cart.Items)
+            {
+                if (item.Id == itemDto.Id)
+                {
+                    item.UpdateQuantity(itemDto.Amount);
+                    item.UpdatePrice(itemDto.Price);
+                    item.UpdateName(itemDto.Name);
+                }
+            }
+
+            await _cartRepository.SaveAsync(cart);
+        }
     }
 
     public async Task RemoveItemFromCartAsync(int cartId, int itemId)
