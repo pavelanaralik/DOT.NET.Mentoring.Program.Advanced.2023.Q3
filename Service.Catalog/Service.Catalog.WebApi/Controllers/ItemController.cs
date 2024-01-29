@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Service.Catalog.Application.DTOs;
 using Service.Catalog.Application.Services;
 using Service.Catalog.WebApi.Models;
@@ -50,6 +51,7 @@ public class ItemController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
+    [Authorize(Policy = "ReadPolicy")]
     public async Task<IActionResult> GetItems([FromQuery] int? categoryId, [FromQuery] int pageNumber = 1,
         [FromQuery] int pageSize = 10, CancellationToken cancellationToken = default)
     {
@@ -86,6 +88,7 @@ public class ItemController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesDefaultResponseType]
+    [Authorize(Policy = "UpdatePolicy")]
     public async Task<IActionResult> AddItem([FromBody] ProductItemDto itemDto, CancellationToken cancellationToken = default)
     {
         await _productItemService.AddItemAsync(itemDto, cancellationToken);
@@ -102,6 +105,7 @@ public class ItemController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
+    [Authorize(Policy = "ReadPolicy")]
     public async Task<IActionResult> GetItemById(int productId, CancellationToken cancellationToken = default)
     {
         var item = await _productItemService.GetItemByIdAsync(productId, cancellationToken);
@@ -122,6 +126,7 @@ public class ItemController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
+    [Authorize(Policy = "UpdatePolicy")]
     public async Task<IActionResult> UpdateItem(int productId, [FromBody] ProductItemDto itemDto, 
         CancellationToken cancellationToken = default)
     {
@@ -140,6 +145,7 @@ public class ItemController : ControllerBase
     [HttpDelete("{productId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesDefaultResponseType]
+    [Authorize(Policy = "UpdatePolicy")]
     public async Task<IActionResult> DeleteItem(int productId, CancellationToken cancellationToken = default)
     {
         await _productItemService.DeleteItemAsync(productId, cancellationToken);

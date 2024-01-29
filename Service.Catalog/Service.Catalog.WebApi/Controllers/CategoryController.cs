@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Service.Catalog.Application.DTOs;
 using Service.Catalog.Application.Services;
 using Service.Catalog.WebApi.Models;
@@ -41,6 +42,7 @@ public class CategoryController : ControllerBase
     /// </summary>
     /// <returns>Supported methods in header of response</returns>
     [HttpOptions(Name = nameof(GetCategoryOptions))]
+    [Authorize(Policy = "ReadPolicy")]
     public IActionResult GetCategoryOptions()
     {
         Response.Headers.Add("Allow", "GET,POST,PUT,DELETE");
@@ -55,6 +57,7 @@ public class CategoryController : ControllerBase
     /// <param name="pageSize">Size of the page.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     [HttpGet]
+    [Authorize(Policy = "ReadPolicy")]
     public async Task<IActionResult> GetCategories([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10, CancellationToken cancellationToken = default)
     {
         var (results, itemCount) = await _catalogService.GetAllCategoriesAsync(cancellationToken);
@@ -72,6 +75,7 @@ public class CategoryController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesDefaultResponseType]
+    [Authorize(Policy = "UpdatePolicy")]
     public async Task<IActionResult> AddCategory([FromBody] CategoryDto categoryDto, CancellationToken cancellationToken = default)
     {
         await _catalogService.AddCategoryAsync(categoryDto, cancellationToken);
@@ -88,6 +92,7 @@ public class CategoryController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
+    [Authorize(Policy = "ReadPolicy")]
     public async Task<IActionResult> GetCategory(int categoryId, CancellationToken cancellationToken = default)
     {
         var category = await _catalogService.GetCategoryByIdAsync(categoryId, cancellationToken);
@@ -108,6 +113,7 @@ public class CategoryController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
+    [Authorize(Policy = "UpdatePolicy")]
     public async Task<IActionResult> UpdateCategory(int categoryId, [FromBody] CategoryDto categoryDto, CancellationToken cancellationToken = default)
     {
         if (categoryId != categoryDto.Id)
@@ -125,6 +131,7 @@ public class CategoryController : ControllerBase
     [HttpDelete("{categoryId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesDefaultResponseType]
+    [Authorize(Policy = "UpdatePolicy")]
     public async Task<IActionResult> DeleteCategory(int categoryId, CancellationToken cancellationToken = default)
     {
         await _catalogService.DeleteCategoryAsync(categoryId, cancellationToken);
