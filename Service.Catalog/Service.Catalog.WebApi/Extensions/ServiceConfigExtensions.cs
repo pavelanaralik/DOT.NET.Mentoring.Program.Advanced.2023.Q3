@@ -9,7 +9,7 @@ public static class ServiceConfigExtensions
         services.AddAuthentication("Bearer")
             .AddJwtBearer("Bearer", options =>
             {
-                options.Authority = "https://localhost:7254"; 
+                options.Authority = "https://localhost:7254";
                 options.RequireHttpsMetadata = false;
                 options.Audience = "catalog";
                 options.TokenValidationParameters = new TokenValidationParameters

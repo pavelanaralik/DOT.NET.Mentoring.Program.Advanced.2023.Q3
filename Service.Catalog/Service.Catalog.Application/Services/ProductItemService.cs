@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.Extensions.Logging;
 using Service.Catalog.Application.DTOs;
 using Service.Catalog.Application.MessagesBrokers;
 using Service.Catalog.Application.Validators;
@@ -13,13 +14,15 @@ public class ProductItemService : IProductItemService
     private readonly IProductItemRepository _itemRepository;
     private readonly IMessageService _messageService;
     private readonly IMapper _mapper;
+    private readonly ILogger<ProductItemService> _logger;
     private readonly ProductItemValidator _itemValidator = new ProductItemValidator();
 
-    public ProductItemService(IProductItemRepository itemRepository, IMapper mapper, IMessageService messageService)
+    public ProductItemService(IProductItemRepository itemRepository, IMapper mapper, IMessageService messageService, ILogger<ProductItemService> logger)
     {
         _itemRepository = itemRepository;
         _mapper = mapper;
         _messageService = messageService;
+        _logger = logger;
     }
 
     public async Task<ProductItemDto> GetItemByIdAsync(int id, CancellationToken cancellationToken = default)
@@ -54,8 +57,10 @@ public class ProductItemService : IProductItemService
         await _itemRepository.AddAsync(item, cancellationToken);
     }
 
-    public async Task UpdateItemAsync(ProductItemDto itemDto, CancellationToken cancellationToken = default)
+    public async Task UpdateItemAsync(ProductItemDto itemDto, string correlationId, CancellationToken cancellationToken = default)
     {
+        _logger.LogWarning("Start updating item for Id: {Id}  CorrelationId: {CorrelationId}", itemDto.Id, correlationId);
+
         var validationResult = await _itemValidator.ValidateAsync(itemDto, cancellationToken);
         if (!validationResult.IsValid)
         {
@@ -64,7 +69,9 @@ public class ProductItemService : IProductItemService
 
         var item = _mapper.Map<ProductItem>(itemDto);
         await _itemRepository.UpdateAsync(item, cancellationToken);
-        await _messageService.PublishAsync(itemDto);
+        await _messageService.PublishAsync(itemDto, correlationId);
+
+        _logger.LogWarning("End updating item for Id: {Id}  CorrelationId: {CorrelationId}", itemDto.Id, correlationId);
     }
 
     public async Task DeleteItemAsync(int id, CancellationToken cancellationToken = default)

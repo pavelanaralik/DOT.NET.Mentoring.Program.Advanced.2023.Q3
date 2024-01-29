@@ -4,5 +4,5 @@ namespace Service.Catalog.Application.MessagesBrokers;
 
 public interface IMessageService
 {
-    Task PublishAsync(ProductItemDto item);
+    Task PublishAsync(ProductItemDto item, string correlationId);
 }

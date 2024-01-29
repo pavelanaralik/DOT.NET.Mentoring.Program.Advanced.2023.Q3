@@ -18,14 +18,16 @@ public class MessageService : IMessageService, IAsyncDisposable
         _queueName = queueName;
     }
 
-    public async Task PublishAsync(ProductItemDto item)
+    public async Task PublishAsync(ProductItemDto item, string correlationId)
     {
         await CreateQueueExistsAsync();
         
         await using ServiceBusSender sender = _client.CreateSender(_queueName);
         string messageBody = JsonSerializer.Serialize(item);
-        ServiceBusMessage message = new ServiceBusMessage(messageBody);
-
+        var message = new ServiceBusMessage(messageBody)
+        {
+            CorrelationId = correlationId
+        };
         await sender.SendMessageAsync(message);
     }
 

@@ -62,6 +62,9 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
+builder.Services.AddApplicationInsightsTelemetry();
+builder.Logging.AddApplicationInsights();
+
 builder.Services.AddAutoMapperProfiles();
 builder.Services.AddWebApiIocConfig();
 builder.Services.RegisterAuth();
@@ -79,7 +82,6 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 app.UseAuthentication();
-app.UseAuthorization();
 app.UseResponseCaching();
 app.UseEndpoints(endpoints =>
 {

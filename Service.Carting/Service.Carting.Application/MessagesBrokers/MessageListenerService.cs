@@ -1,6 +1,7 @@
 ﻿using Azure.Messaging.ServiceBus;
 using Microsoft.Extensions.Hosting;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 using Service.Carting.Application.DTOs;
 using Service.Carting.Application.Services;
 
@@ -12,13 +13,15 @@ public class MessageListenerService : BackgroundService
     private readonly ICartAppService _cartService;
 
     private readonly string _queueName;
+    private readonly ILogger<MessageListenerService> _logger;
     private ServiceBusProcessor _processor;
 
-    public MessageListenerService(string connectionString, string queueName, ICartAppService cartService)
+    public MessageListenerService(string connectionString, string queueName, ICartAppService cartService, ILogger<MessageListenerService> logger)
     {
         _client = new ServiceBusClient(connectionString);
         _queueName = queueName;
         _cartService = cartService;
+        _logger = logger;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -42,14 +45,21 @@ public class MessageListenerService : BackgroundService
         {
             string body = args.Message.Body.ToString();
             var item = JsonSerializer.Deserialize<CartItemDto>(body);
+            var correlationId = args.Message.CorrelationId;
 
-            if (item != null) await UpdateCartItemAsync(item);
-
+            if (item != null)
+            {
+                _logger.LogWarning("Start updating cart item for Id: {Id}  CorrelationId: {CorrelationId}", item.Id, correlationId);
+                await UpdateCartItemAsync(item);
+                _logger.LogWarning("End updating cart item for Id: {Id}  CorrelationId: {CorrelationId}", item.Id, correlationId);
+            }
+            
             await args.CompleteMessageAsync(args.Message);
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error processing message: {ex.Message}");
+            _logger.LogError($"Error processing message: {ex.Message}");
 
             if (args.Message.DeliveryCount >= 5)
             {

@@ -21,16 +21,18 @@ public class ItemController : ControllerBase
     private readonly IProductItemService _productItemService;
 
     private readonly ItemResourceFactory _resourceFactory;
+    private readonly ILogger<ItemController> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ItemController"/> class.
     /// </summary>
     /// <param name="productItemService">The product item service.</param>
     /// <param name="resourceFactory">The resource factory.</param>
-    public ItemController(IProductItemService productItemService, ItemResourceFactory resourceFactory)
+    public ItemController(IProductItemService productItemService, ItemResourceFactory resourceFactory, ILogger<ItemController> logger)
     {
         _productItemService = productItemService;
         _resourceFactory = resourceFactory;
+        _logger = logger;
     }
 
     /// <summary>
@@ -133,7 +135,8 @@ public class ItemController : ControllerBase
         if (productId != itemDto.Id)
             return BadRequest();
 
-        await _productItemService.UpdateItemAsync(itemDto, cancellationToken);
+        var correlationId = Guid.NewGuid().ToString();
+        await _productItemService.UpdateItemAsync(itemDto, correlationId, cancellationToken);
         return NoContent();
     }
 

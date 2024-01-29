@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.DependencyInjection;
 using Service.Carting.Application.MessagesBrokers;
 using Service.Carting.Application.Services;
 using Service.Carting.Infrastructure.Repositories;
@@ -10,15 +11,14 @@ public static class IocConfig
 {
     private const string QueueName = "catalog";
     private const string ConnectionString = @"";
-
     public static IServiceCollection AddWebApiIocConfig(this IServiceCollection services)
     {
         services
-            .AddScoped<ICartAppService, CartAppService>()
-            .AddScoped<ICartRepository, CartRepository>();
+            .AddSingleton<ICartAppService, CartAppService>()
+            .AddSingleton<ICartRepository, CartRepository>();
 
         services.AddSingleton<MessageListenerService>(provider =>
-            new MessageListenerService(ConnectionString, QueueName, provider.GetService<CartAppService>()));
+            new MessageListenerService(ConnectionString, QueueName, provider.GetService<ICartAppService>(), provider.GetService<ILogger<MessageListenerService>>()));
 
         services.AddHostedService(provider => provider.GetService<MessageListenerService>());
 
