@@ -11,11 +11,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Carting.Domain", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Carting.Application", "Service.Carting.Application\Service.Carting.Application.csproj", "{605F2A7B-1AE9-4816-9D3C-319C05CC6D9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Carting.UnitTests", "Service.Carting.UnitTests\Service.Carting.UnitTests.csproj", "{18359583-276D-48F8-AE1D-DA9C95ABA8C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Carting.UnitTests", "Service.Carting.UnitTests\Service.Carting.UnitTests.csproj", "{18359583-276D-48F8-AE1D-DA9C95ABA8C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Carting.IntegrationTests", "Service.Carting.IntegrationTests\Service.Carting.IntegrationTests.csproj", "{6BF4C115-DD99-435C-85BD-AD13A1841079}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Carting.IntegrationTests", "Service.Carting.IntegrationTests\Service.Carting.IntegrationTests.csproj", "{6BF4C115-DD99-435C-85BD-AD13A1841079}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Carting.Component.UnitTests", "Service.Carting.Component.UnitTests\Service.Carting.Component.UnitTests.csproj", "{8CA07CAE-F3DF-450D-9D98-9F01C6277CF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Carting.Component.UnitTests", "Service.Carting.Component.UnitTests\Service.Carting.Component.UnitTests.csproj", "{8CA07CAE-F3DF-450D-9D98-9F01C6277CF1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{78CEF5D3-6D5F-4524-81AD-DF6DEFCE7E62}"
+	ProjectSection(SolutionItems) = preProject
+		ci.yml = ci.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
