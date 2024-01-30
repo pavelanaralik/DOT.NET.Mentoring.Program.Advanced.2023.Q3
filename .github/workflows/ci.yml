@@ -22,10 +22,10 @@ jobs:
         dotnet-version: '6.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore Service.Catalog.sln
+      run: dotnet restore Service.Catalog/Service.Catalog.sln
 
     - name: Build
-      run: dotnet build Service.Catalog.sln --no-restore
+      run: dotnet build Service.Catalog/Service.Catalog.sln --no-restore
 
     - name: Run Unit Tests
-      run: dotnet test Service.Catalog.UnitTests/Service.Catalog.UnitTests.csproj --no-restore --verbosity normal
+      run: dotnet test Service.Catalog/Service.Catalog.UnitTests/Service.Catalog.UnitTests.csproj --no-restore --verbosity normal
